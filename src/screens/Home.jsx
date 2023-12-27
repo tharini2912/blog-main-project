@@ -93,7 +93,7 @@ const Home = () => {
 
   const fetchEarlierBlogs = async () => {
     if (!localUID) {
-      console.error("Local UID not found. Cannot fetch earlier blogs.");
+      console.error("can't fetch blogs because local uid not found");
       return;
     }
     const userRef = doc(appDB, "users", localUID);
@@ -114,7 +114,7 @@ const Home = () => {
 
   const handleDeleteClick = async (blogUniqueId) => {
     if (!localUID) {
-      console.error("Local UID not found. Cannot update blog.");
+      console.error("can't update blogs because local uid not found.");
       return;
     }
     const userRef = doc(appDB, "users", localUID);
@@ -122,7 +122,7 @@ const Home = () => {
     const blogQuery = query(blogsRef, where("uniqueId", "==", blogUniqueId));
     const querySnapshot = await getDocs(blogQuery);
     if (querySnapshot.empty) {
-      console.error("Blog not found in Firestore. Cannot update.");
+      console.error("can't update blog not found in firestore");
       return;
     }
     querySnapshot.forEach(async (doc) => {
@@ -131,7 +131,7 @@ const Home = () => {
         uniqueId: "",
       });
 
-      console.log("Blog updated successfully!");
+      console.log("blog updated successfully");
       // Fetch the latest blogs
       await fetchEarlierBlogs();
     });
@@ -142,7 +142,7 @@ const Home = () => {
   const handleUpdateClick = async (e) => {
     e.preventDefault();
     if (!localUID || !selectedBlog) {
-      console.error("Local UID or selected blog not found. Cannot update.");
+      console.error("can't update because local uid not found");
       return;
     }
 
@@ -154,7 +154,7 @@ const Home = () => {
     );
     const querySnapshot = await getDocs(blogQuery);
     if (querySnapshot.empty) {
-      console.error("Blog not found in appDB. Cannot update.");
+      console.error("blog not found in appDB so can't update");
       return;
     }
     querySnapshot.forEach(async (doc) => {
@@ -163,7 +163,7 @@ const Home = () => {
         content,
         createdDate: new Date(),
       });
-      console.log("Blog updated successfully!");
+      console.log("blog updated successfully");
       // from db fetch
       await fetchEarlierBlogs();
       // for reseting the blog state
@@ -189,7 +189,6 @@ const Home = () => {
           className={`for-heading ${isExpanded ? "expanded-title" : ""}`}
           onFocus={handleTextareaFocus}
           onBlur={handleTextareaBlur}
-          // onChange={handleTitleChange}
           onChange={(e) => setTitle(e.target.value)}
           value={title}
           name=""
@@ -202,7 +201,6 @@ const Home = () => {
           className={`for-content ${isExpanded ? "expanded" : ""}`}
           onFocus={handleTextareaFocus}
           onBlur={handleTextareaBlur}
-          // onChange={handleContentChange}
           onChange={(e) => setContent(e.target.value)}
           value={content}
           name=""

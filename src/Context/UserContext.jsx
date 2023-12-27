@@ -41,16 +41,13 @@ export const UserProvider = ({ children }) => {
         const { displayName } = userDocSnapshot.data();
         console.log(displayName);
 
-        setDisplayNameNew(displayName); // Set displayNameNew in state
+        setDisplayNameNew(displayName);
         localStorage.setItem("displayNameNew", displayName);
       } else {
-        console.log("User document not found in Firestore");
+        console.log("user document is not found in fs");
       }
     } catch (error) {
-      console.error(
-        "Error fetching user document from Firestore:",
-        error.message
-      );
+      console.error("firestore fetching error", error.message);
     }
   };
 

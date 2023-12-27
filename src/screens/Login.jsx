@@ -39,7 +39,6 @@ const Login = () => {
 
           setUser(email, displayName, uid);
           getUserDisplayNameFromFirestore(uid);
-          // navigate("/Category");
           navigate("/home");
           console.log(user.email);
           console.log(user.displayName);
