@@ -79,10 +79,3 @@ export {
   appDB,
   appAuth,
 };
-
-// const addData = async (collection, id, val) => {
-//   const res = await setDoc(doc(appDB, collection, id), val);
-//   console.log(res);
-// };
-// addData("cities", "LA", { name: "Los Angeles", state: "CA", country: "USA" });
-// addData("cities", "WD", { name: "Washington", state: "DC", country: "USA" });
