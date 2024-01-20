@@ -13,12 +13,14 @@ import SignUp from "./screens/SignUp.jsx";
 import Login from "./screens/Login.jsx";
 import { UserProvider } from "./Context/UserContext.jsx";
 import Private from "./components/Private.Route.jsx";
+import Profile from "./screens/Profile.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="" element={<Private />}>
         <Route index={true} path="/home" element={<Home />} />
+        <Route path="/updateProfile" element={<Profile/>}/>
       </Route>
 
       <Route path="/signup" element={<SignUp />} />
@@ -29,7 +31,6 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    {/* <App /> */}
     <UserProvider>
       <RouterProvider router={router} />
     </UserProvider>

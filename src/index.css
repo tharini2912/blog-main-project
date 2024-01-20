@@ -259,6 +259,178 @@ form button {
 .map-createdDate {
   color: white;
 }
+.credential {
+  background-color: navajowhite;
+  transition: transform 0.3s ease;
+  font-weight: 700;
+  color: cadetblue;
+}
+.credential:hover {
+  background-color: white;
+  color: black;
+}
+.c-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.banner {
+  width: auto;
+  height: auto;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+/* ........................................ */
+
+.upload-photo {
+  position: relative;
+  cursor: pointer;
+  margin: auto;
+  padding: 0 2rem 0 2rem;
+  display: flex;
+  gap: 2rem;
+}
+
+.upload-photo input {
+  position: absolute;
+  font-size: 9999px;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.upload-photo span {
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  display: inline-block;
+  margin: auto;
+}
+
+/* not needed now */
+.upload-photo input:focus + span,
+.upload-photo input:valid + span {
+  background-color: #e0e0e0;
+}
+
+/* ........................................ */
+
+.img-container-profile {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}
+.l-flex {
+  display: flex;
+}
+
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.avatar-img {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+.none-deco {
+  text-decoration: none;
+}
+.profile-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  padding: 6rem;
+  justify-content: space-between;
+  background-image: url(../images/back.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.profile-detail {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-around;
+  align-items: center;
+}
+.profile-detail h1 {
+  color: white;
+}
+.profile-page-img {
+  border-radius: 1rem;
+  max-width: 30rem;
+}
+.update-profile-detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+}
+.update-profile-detail form .up-input {
+  width: auto;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  padding: 0.5rem;
+}
+.clr-profile-update{
+  color: white;
+
+}
+.google-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: rgb(66, 133, 244);
+  color: white;
+}
+
+.blog-photo {
+  margin-top: 0.5rem;
+  position: relative;
+  
+}
+.blog-photo input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  opacity: 0;
+  
+}
+.blog-photo span {
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  display: inline-block;
+  margin: auto;
+  background-color: rgb(201, 223, 232);
+  border-radius: 1rem;
+}
+.blogImg-min {
+  max-width: 40rem;
+  border-radius: 1rem;
+  border: 2px solid white;
+}
+.flex-blogImg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 @media screen and (max-width: 768px) {
   .text-container-w {
     width: 80%;
@@ -269,5 +441,26 @@ form button {
   }
   form input {
     width: 100%;
+  }
+  .profile-page {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .profile-detail {
+    flex-direction: column-reverse;
+  }
+  .profile-detail h1 {
+    margin-bottom: 2rem;
+  }
+  .update-profile-detail {
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+  }
+  .update-profile-detail form {
+    max-width: 100%;
+  }
+  .blogImg-min {
+    max-width: 10rem;
   }
 }

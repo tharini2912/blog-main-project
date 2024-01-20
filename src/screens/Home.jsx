@@ -28,6 +28,13 @@ const Home = () => {
   const [earlierBlogs, setEarlierBlogs] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
 
+  const {blogImage, setBlogImage, uploadBlogPhoto} = useUser();
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setBlogImage(file);
+  };
+
   const handleTextareaFocus = () => {
     setIsExpanded(true);
   };
@@ -45,10 +52,17 @@ const Home = () => {
 
   const handleSaveClick = async () => {
     const newUniqueId = uuidv4();
-    await saveBlog(title, content, createdDate, newUniqueId);
+
+    let imageUrl = "";
+    if (blogImage) {
+      imageUrl = await uploadBlogPhoto(blogImage, newUniqueId);
+      console.log("Image URL:", imageUrl);
+    }
+    await saveBlog(title, content, createdDate, newUniqueId, imageUrl);
     setTitle("");
     setContent("");
     setCreatedDate("");
+    setBlogImage(null);
     await fetchEarlierBlogs();
   };
 
@@ -67,7 +81,7 @@ const Home = () => {
   const { uid: localUID } = useUser();
   console.log("Local UID:", localUID);
 
-  const saveBlog = async (title, content, createdDate, uniqueId) => {
+  const saveBlog = async (title, content, createdDate, uniqueId, imageUrl) => {
     if (!localUID) {
       console.error("Local UID not found. Cannot save blog.");
       return;
@@ -83,6 +97,7 @@ const Home = () => {
         content,
         createdDate: new Date(),
         uniqueId,
+        imageUrl,
       });
 
       console.log("Blog saved successfully!");
@@ -208,8 +223,16 @@ const Home = () => {
           cols="30"
           rows="10"
         ></textarea>
+   
+
+
+
+        <label htmlFor="" className="blog-photo">
+          <span>upload blog image</span>
+          <input type="file" id="blogImage" name="blogImage" onChange={handleFileChange} />
+        </label>
         <button
-          className="btn-cmn"
+          className="btn-cmn btn-blog-img"
           onClick={selectedBlog ? handleUpdateClick : handleSaveClick}
           disabled={!title || !content}
         >
@@ -230,6 +253,9 @@ const Home = () => {
                 <div className="map-blog" key={blog.uniqueId}>
                   {console.log(blog.uniqueId)}
                   <h2 className="map-head">{blog.title}</h2>
+                  <div className="flex-blogImg">
+                    <img className="blogImg-min" src={blog.imageUrl} alt="" />
+                  </div>
                   <p className="map-para">{blog.content}</p>
                   <p className="map-createdDate">
                     Created on:{" "}

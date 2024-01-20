@@ -1,14 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   createUserDocumentFromAuth,
   signInAuthUserWithEmailAndPassword,
+  signInWithGooglePopup,
 } from "../firebase/index.js";
 import { useUser } from "../Context/UserContext.jsx";
 import { collection, addDoc, getDoc, doc } from "firebase/firestore";
 import { appAuth, appDB } from "../firebase";
+import { FaGoogle } from "react-icons/fa";
+
 
 const Login = () => {
+//Google Sign in Popup
+  const signInWithGoogle = async (event) => {
+    event.preventDefault();
+    const { user } = await signInWithGooglePopup();
+    const userDocRef = await createUserDocumentFromAuth(user);
+    setUser(user.email, user.displayName, user.uid);
+          getUserDisplayNameFromFirestore(uid);
+          navigate("/home");
+  };
+
+
   const navigate = useNavigate();
   const {
     formFields,
@@ -59,7 +73,13 @@ const Login = () => {
     setFormFields({ ...formFields, [name]: value });
   };
 
-  //for getting Display Name from DB
+  //Model Window Open and Close
+
+  const [openWindow, setOpenWindow] = useState(false);
+
+  const windowHandler = () => {
+    setOpenWindow(!openWindow);
+  };
 
   return (
     <section className="for-signup-bg">
@@ -79,10 +99,27 @@ const Login = () => {
           onChange={changeHandler}
           placeholder="Password"
         />
-        <button type="submit">Login</button>
+        
+        <button className="credential" type="submit">
+          Login
+        </button>
+        <button className="credential google-btn" type="submit" onClick={signInWithGoogle}>
+          <FaGoogle/> Sign in with Google
+        </button>
         <h3>
           New user? <Link to="/signup">Signup</Link>
         </h3>
+        <button className="credential" onClick={windowHandler}>
+          View Test Credentials
+        </button>
+        {openWindow && (
+          <div className="c-flex">
+            <div className="banner">
+              <h3>Username : user@test.com</h3>
+              <h3>Password : tdx@444</h3>
+            </div>
+          </div>
+        )}
       </form>
     </section>
   );
