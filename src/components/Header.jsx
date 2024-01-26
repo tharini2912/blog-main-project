@@ -4,15 +4,23 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { displayNameNew, fetchAvatarURL, getUserDisplayNameFromFirestore, setUserEmail, avatar } = useUser();
+  // const { displayNameNew, fetchAvatarURL, getUserDisplayNameFromFirestore, setUserEmail, avatar } = useUser();
+
+  const {
+    displayNameNew,
+    fetchAvatarURL,
+    getUserProfileInfoFromFirestore,
+    setUserEmail,
+    avatar,
+  } = useUser();
 
   useEffect(() => {
     const uid = localStorage.getItem("uid");
     if (uid) {
-      getUserDisplayNameFromFirestore(uid);
+      getUserProfileInfoFromFirestore(uid);
       fetchAvatarURL(uid);
     }
-  }, [getUserDisplayNameFromFirestore, fetchAvatarURL]);
+  }, [getUserProfileInfoFromFirestore, fetchAvatarURL]);
 
   const handleSignOut = () => {
     window.localStorage.clear();
@@ -22,15 +30,15 @@ const Header = () => {
   return (
     <section className="for-header">
       <Link className="none-deco" to="/updateProfile">
-      <div className="avatar">
-        {avatar && <img className="avatar-img" src={avatar} alt="" />}
-        <h1>Hello {displayNameNew}</h1>
-      </div>
+        <div className="avatar">
+          {avatar && <img className="avatar-img" src={avatar} alt="" />}
+          <h1>Hello {displayNameNew}</h1>
+        </div>
       </Link>
       <Link className="none-deco" to="/Home">
-      <h1>Blog Shine</h1>
+        <h1>Blog Shine</h1>
       </Link>
-      
+
       <button
         style={{ padding: "0.2rem", borderRadius: "0.2rem", cursor: "pointer" }}
         className="signout-btn"
@@ -43,4 +51,3 @@ const Header = () => {
 };
 
 export default Header;
-

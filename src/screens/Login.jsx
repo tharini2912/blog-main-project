@@ -18,7 +18,8 @@ const Login = () => {
     const { user } = await signInWithGooglePopup();
     const userDocRef = await createUserDocumentFromAuth(user);
     setUser(user.email, user.displayName, user.uid);
-          getUserDisplayNameFromFirestore(uid);
+          // getUserDisplayNameFromFirestore(uid);
+          getUserProfileInfoFromFirestore(uid);
           navigate("/home");
   };
 
@@ -32,7 +33,7 @@ const Login = () => {
     userEmail,
     displayName,
     setDisplayNameNew,
-    getUserDisplayNameFromFirestore,
+    getUserProfileInfoFromFirestore,
   } = useUser();
   const { email, uid, password, confirmPassword } = formFields;
 
@@ -52,7 +53,7 @@ const Login = () => {
           const { uid, displayName, email } = user;
 
           setUser(email, displayName, uid);
-          getUserDisplayNameFromFirestore(uid);
+          getUserProfileInfoFromFirestore(uid);
           navigate("/home");
           console.log(user.email);
           console.log(user.displayName);

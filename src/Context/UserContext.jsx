@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { collection, addDoc, getDoc, doc, setDoc } from "firebase/firestore";
 import { appAuth, appDB } from "../firebase/index.js";
-import "firebase/firestore"
+import "firebase/firestore";
 import { imageDb } from "../firebase/index.js";
 import {
   ref,
@@ -9,7 +9,6 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-
 
 const UserContext = createContext();
 
@@ -19,16 +18,37 @@ export const UserProvider = ({ children }) => {
   const [displayNameNew, setDisplayNameNew] = useState("");
   const [avatar, setAvatar] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState(null);
+  const [lastName, setLastName] = useState(null);
+  const [address, setAddress] = useState(null);
+  const [city, setCity] = useState(null);
+  const [state, setState] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [pinCode, setPinCode] = useState(null);
 
   const [blogImage, setBlogImage] = useState(null);
   const [blogImageUrl, setBlogImageUrl] = useState(null);
 
   // const [uid, setUid] = useState("");
   const [uid, setUid] = useState(localStorage.getItem("uid") || "");
-  
+
+  // const [formFields, setFormFields] = useState({
+  //   displayName: "",
+  //   email: "",
+  //   password: "",
+  //   confirmPassword: "",
+  //   uid: "",
+  //   avatar: "",
+  // });
 
   const [formFields, setFormFields] = useState({
     displayName: "",
+    lastName: "",
+    address: "",
+    city: "",
+    state: "",
+    pinCode: "",
+    phoneNumber: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -47,18 +67,39 @@ export const UserProvider = ({ children }) => {
   };
   const storedUserEmail = localStorage.getItem("userEmail");
 
-  //getting name from db
+  //getting user profile info
 
-  const getUserDisplayNameFromFirestore = async (uid) => {
+  const getUserProfileInfoFromFirestore = async (uid) => {
     try {
       const userDocRef = doc(appDB, "users", uid);
       const userDocSnapshot = await getDoc(userDocRef);
 
       if (userDocSnapshot.exists()) {
-        const { displayName } = userDocSnapshot.data();
+        const {
+          displayName,
+          lastName,
+          email,
+          address,
+          city,
+          state,
+          phoneNumber,
+          pinCode,
+        } = userDocSnapshot.data();
         console.log(displayName);
-
+        console.log(lastName);
+        console.log(email);
+        console.log(address);
+        console.log(city);
+        console.log(state);
+        console.log(phoneNumber);
         setDisplayNameNew(displayName);
+        setLastName(lastName);
+        setAddress(address);
+        setCity(city);
+        setState(state);
+        setPhoneNumber(phoneNumber);
+        setEmail(email);
+        setPinCode(pinCode);
         localStorage.setItem("displayNameNew", displayName);
       } else {
         console.log("user document is not found in fs");
@@ -67,7 +108,6 @@ export const UserProvider = ({ children }) => {
       console.error("firestore fetching error", error.message);
     }
   };
-
 
   //for fetching displayImage
 
@@ -102,12 +142,9 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-
   //for fetching blogImage url
 
-  const fetchBlogImageURL = async (uid) => {
-
-  }
+  const fetchBlogImageURL = async (uid) => {};
 
   //for updating profile
   const updateProfileDocument = async (userId, data) => {
@@ -126,7 +163,7 @@ export const UserProvider = ({ children }) => {
 
   const uploadAvatar = async (file, userId) => {
     try {
-      const path =  'userId' + '.jpg';
+      const path = "userId" + ".jpg";
       const storageRef = ref(imageDb, `images/${path}`);
       await uploadBytes(storageRef, file);
       const avatarUrl = await getDownloadURL(storageRef);
@@ -136,8 +173,6 @@ export const UserProvider = ({ children }) => {
       throw error;
     }
   };
-  
-  
 
   return (
     <UserContext.Provider
@@ -151,11 +186,10 @@ export const UserProvider = ({ children }) => {
         uid,
         displayNameNew,
         setDisplayNameNew,
-        getUserDisplayNameFromFirestore,
         avatar,
         setAvatar,
         fetchAvatarURL,
-        avatarUrl, 
+        avatarUrl,
         setAvatarUrl,
         updateProfileDocument,
         uploadAvatar,
@@ -165,6 +199,14 @@ export const UserProvider = ({ children }) => {
         setBlogImageUrl,
         fetchBlogImageURL,
         uploadBlogPhoto,
+        getUserProfileInfoFromFirestore,
+        lastName,
+        address,
+        city,
+        state,
+        phoneNumber,
+        email,
+        pinCode,
       }}
     >
       {children}

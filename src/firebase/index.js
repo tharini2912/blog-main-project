@@ -9,6 +9,7 @@ import {
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 // import { getFirestore } from "firebase/firestore/lite";
+import { EmailAuthProvider } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyD8YqMz-Kb-AcYzrdGyiAyC0zwTaPbCyk8",
@@ -84,4 +85,5 @@ export {
   appDB,
   appAuth,
   imageDb,
+  EmailAuthProvider,
 };
