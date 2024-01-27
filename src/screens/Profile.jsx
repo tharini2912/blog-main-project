@@ -92,10 +92,16 @@ try {
 
   return (
     <section className="main-profile">
+      <div className="title-head">
+      <h1 className="title-profile">Hello {displayNameNew}</h1>
+      </div>
+       
       <div className="profile-page">
+     
       <div className="profile-detail">
+      
         {avatar && <img className="profile-page-img" src={avatar} alt="" />}
-        <h1>Hello {displayNameNew}</h1>
+        
         
       </div>
       <div className="user-detail">
